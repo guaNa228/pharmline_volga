@@ -2,13 +2,13 @@ const scrollToTopDiv = document.querySelector('.topScroll');
 const workingElement = document.querySelector('.title h1');
 
 
-scrollToTopDiv.onclick = function() {
+scrollToTopDiv.onclick = function () {
 	console.log(this);
-	document.querySelector('header').scrollIntoView({behavior: "smooth"});
+	document.querySelector('header').scrollIntoView({ behavior: "smooth" });
 }
 
 const scrollDetection = () => {
-	if (window.scrollY>window.innerHeight && window.innerWidth>=840) {
+	if (window.scrollY > window.innerHeight && window.innerWidth >= 840) {
 		scrollToTopDiv.classList.add('show');
 	} else {
 		scrollToTopDiv.classList.remove('show');
@@ -34,7 +34,17 @@ function serviceToggle() {
 	}
 }
 
+document.querySelectorAll('[data-copy]').forEach(btn => {
+	const original = btn.textContent;
+	let timer;
 
+	btn.addEventListener('click', async () => {
+		await navigator.clipboard.writeText(btn.dataset.copy);
+		btn.textContent = 'Скопировано!';
+		clearTimeout(timer);
+		timer = setTimeout(() => btn.textContent = original, 1500);
+	});
+});
 
 function menuScroll(e) {
 	e.preventDefault();
